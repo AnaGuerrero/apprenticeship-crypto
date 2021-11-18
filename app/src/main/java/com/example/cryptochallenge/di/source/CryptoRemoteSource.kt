@@ -2,9 +2,8 @@ package com.example.cryptochallenge.di.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.cryptochallenge.data.source.ICryptoSource
+import com.example.cryptochallenge.data.source.ICryptoRemoteSource
 import com.example.cryptochallenge.di.client.NetworkClient
-import com.example.cryptochallenge.domain.availablebook.AvailableBook
 import com.example.cryptochallenge.domain.availablebook.Payload
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -13,7 +12,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 /**
  * Perform the calls to web services and returns responses
  */
-class CryptoSource : ICryptoSource {
+class CryptoRemoteSource : ICryptoRemoteSource {
     /**
      * Property for dispose web service calls when fragment destroy
      */

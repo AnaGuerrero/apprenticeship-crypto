@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cryptochallenge.R
 import com.example.cryptochallenge.databinding.FragmentCryptoDetailBinding
+import com.example.cryptochallenge.ui.Extensions.show
 import com.example.cryptochallenge.ui.cryptodetail.adapter.SectionsAdapter
 import com.example.cryptochallenge.ui.home.HomeFragment.Companion.CRYPTO_NAME
 import com.google.android.material.snackbar.Snackbar
@@ -103,7 +104,7 @@ class CryptoDetailFragment : Fragment() {
      * @param show Indicator that determines if the loader should be shown or hidden
      */
     private fun showLoader(show: Boolean) {
-        binding?.iLoader?.root?.visibility = if (show) View.VISIBLE else View.GONE
+        binding?.iLoader?.root?.show(show)
     }
 
     override fun onDestroy() {

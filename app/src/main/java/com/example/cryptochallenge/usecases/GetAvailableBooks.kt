@@ -14,5 +14,5 @@ class GetAvailableBooks(private val repository: CryptoRepository) {
      *
      * @return Web service response
      */
-    fun execute() = repository.getAvailableBooks()
+    fun execute() = repository.getRemoteAvailableBooks()
 }

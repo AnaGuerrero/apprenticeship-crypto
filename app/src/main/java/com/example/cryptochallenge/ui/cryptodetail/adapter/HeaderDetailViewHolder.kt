@@ -3,9 +3,10 @@ package com.example.cryptochallenge.ui.cryptodetail.adapter
 import com.example.cryptochallenge.databinding.ItemHeaderDetailBinding
 import com.example.cryptochallenge.domain.CryptoCurrencyType
 import com.example.cryptochallenge.domain.DetailSectionItem
-import com.example.cryptochallenge.ui.Extensions
-import com.example.cryptochallenge.ui.Extensions.Companion.getMajorAndMinor
-import com.example.cryptochallenge.ui.Extensions.Companion.loadCurrencyImg
+import com.example.cryptochallenge.ui.Extensions.MAJOR
+import com.example.cryptochallenge.ui.Extensions.MINOR
+import com.example.cryptochallenge.ui.Extensions.getMajorAndMinor
+import com.example.cryptochallenge.ui.Extensions.loadCurrencyImg
 import com.example.cryptochallenge.ui.commons.BaseHolder
 import java.lang.Exception
 
@@ -25,7 +26,7 @@ class HeaderDetailViewHolder(private val binding: ItemHeaderDetailBinding) :
 
         val values = cryptoName.getMajorAndMinor()
 
-        values?.get(Extensions.MAJOR)?.let {
+        values?.get(MAJOR)?.let {
             val currency = try {
                 CryptoCurrencyType.valueOf(it.uppercase())
             } catch (exception: Exception) {
@@ -36,7 +37,7 @@ class HeaderDetailViewHolder(private val binding: ItemHeaderDetailBinding) :
             binding.ivCryptoImageMajor.loadCurrencyImg(currency.imgId)
         }
 
-        values?.get(Extensions.MINOR)?.let {
+        values?.get(MINOR)?.let {
             val currency = try {
                 CryptoCurrencyType.valueOf(it.uppercase())
             } catch (exception: Exception) {

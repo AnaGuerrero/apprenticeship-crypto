@@ -11,8 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cryptochallenge.R
 import com.example.cryptochallenge.databinding.FragmentHomeBinding
-import com.example.cryptochallenge.domain.availablebook.AvailableBook
 import com.example.cryptochallenge.domain.availablebook.Payload
+import com.example.cryptochallenge.ui.Extensions.show
 import com.example.cryptochallenge.ui.home.adapter.CryptocurrencyAdapter
 
 /**
@@ -54,11 +54,13 @@ class HomeFragment : Fragment() {
      */
     private fun setViewModelListener() {
         viewModel.getAvailableBooks().observe(viewLifecycleOwner) {
+            viewModel.processInfo(it)
             if (!it.isNullOrEmpty())
                 setAvailableBooks(it)
-            else
-                showEmtpyState(true)
-            showLoader(false)
+        }
+
+        viewModel.getLocalAvailableBooks().observe(viewLifecycleOwner) {
+            processInfo(it)
         }
 
         viewModel.eventTrigger.observe(viewLifecycleOwner) {
@@ -66,6 +68,19 @@ class HomeFragment : Fragment() {
                 is HomeEvent.OnShowCryptoDetail -> toCryptoDetail(it.cryptoName)
             }
         }
+    }
+
+    /**
+     * When [bookList] has information it shows it, otherwise it shows an empty state
+     *
+     * @param bookList Book's list
+     */
+    private fun processInfo(bookList: List<Payload>?) {
+        if (!bookList.isNullOrEmpty())
+            setAvailableBooks(bookList)
+        else
+            showEmptyState(true)
+        showLoader(false)
     }
 
     /**
@@ -88,8 +103,9 @@ class HomeFragment : Fragment() {
      * @param cryptoCurrencyList Available books list
      */
     private fun setAvailableBooks(cryptoCurrencyList: List<Payload>) {
-        showEmtpyState(false)
+        showEmptyState(false)
         cryptoCurrencyAdapter.submitList(cryptoCurrencyList)
+        cryptoCurrencyAdapter.notifyDataSetChanged()
     }
 
     /**
@@ -97,9 +113,9 @@ class HomeFragment : Fragment() {
      *
      * @param show Indicator that determines if the empty state should be shown or hidden
      */
-    private fun showEmtpyState(show: Boolean) {
-        binding?.rvCryptocurrencyList?.visibility = if (show) View.GONE else View.VISIBLE
-        binding?.tvEmptyState?.visibility = if (show) View.VISIBLE else View.GONE
+    private fun showEmptyState(show: Boolean) {
+        binding?.rvCryptocurrencyList?.show(!show)
+        binding?.tvEmptyState?.show(show)
     }
 
     /**
@@ -108,7 +124,7 @@ class HomeFragment : Fragment() {
      * @param show Indicator that determines if the loader should be shown or hidden
      */
     private fun showLoader(show: Boolean) {
-        binding?.iLoader?.root?.visibility = if (show) View.VISIBLE else View.GONE
+        binding?.iLoader?.root?.show(show)
     }
 
     /**

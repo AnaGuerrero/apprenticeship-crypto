@@ -6,7 +6,7 @@ import com.example.cryptochallenge.domain.availablebook.Payload
 /**
  * Handle the calls to web services
  */
-interface ICryptoSource {
+interface ICryptoRemoteSource {
 
     /**
      * Get all the available books

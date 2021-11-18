@@ -4,10 +4,10 @@ import android.view.View
 import com.example.cryptochallenge.databinding.ItemCryptocurrencyBinding
 import com.example.cryptochallenge.domain.CryptoCurrencyType
 import com.example.cryptochallenge.domain.availablebook.Payload
-import com.example.cryptochallenge.ui.Extensions.Companion.MAJOR
-import com.example.cryptochallenge.ui.Extensions.Companion.MINOR
-import com.example.cryptochallenge.ui.Extensions.Companion.getMajorAndMinor
-import com.example.cryptochallenge.ui.Extensions.Companion.loadCurrencyImg
+import com.example.cryptochallenge.ui.Extensions.MAJOR
+import com.example.cryptochallenge.ui.Extensions.MINOR
+import com.example.cryptochallenge.ui.Extensions.getMajorAndMinor
+import com.example.cryptochallenge.ui.Extensions.loadCurrencyImg
 import com.example.cryptochallenge.ui.commons.BaseHolder
 import java.lang.Exception
 

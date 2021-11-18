@@ -1,11 +1,11 @@
 package com.example.cryptochallenge.ui.cryptodetail
 
+import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import com.example.cryptochallenge.data.repository.CryptoRepository
 import com.example.cryptochallenge.domain.DetailSectionItem
 import com.example.cryptochallenge.domain.SectionType
 import com.example.cryptochallenge.domain.ticker.Payload
+import com.example.cryptochallenge.ui.commons.BaseViewModel
 import com.example.cryptochallenge.ui.commons.SingleLiveEvent
 import com.example.cryptochallenge.usecases.GetOrderBook
 import com.example.cryptochallenge.usecases.GetTicker
@@ -13,11 +13,7 @@ import com.example.cryptochallenge.usecases.GetTicker
 /**
  * ViewModel for Cryptocurrency detail
  */
-class CryptoDetailViewModel : ViewModel() {
-    /**
-     * Property to handle [CryptoRepository]
-     */
-    private val cryptoRepository = CryptoRepository()
+class CryptoDetailViewModel(application: Application) : BaseViewModel(application) {
 
     /**
      * LiveData for load sections

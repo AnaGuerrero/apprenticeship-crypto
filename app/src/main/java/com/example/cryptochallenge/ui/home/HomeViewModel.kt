@@ -1,20 +1,20 @@
 package com.example.cryptochallenge.ui.home
 
+import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import com.example.cryptochallenge.data.repository.CryptoRepository
+import androidx.lifecycle.viewModelScope
 import com.example.cryptochallenge.domain.availablebook.Payload
+import com.example.cryptochallenge.ui.commons.BaseViewModel
 import com.example.cryptochallenge.ui.commons.SingleLiveEvent
 import com.example.cryptochallenge.usecases.GetAvailableBooks
+import com.example.cryptochallenge.usecases.GetLocalAvailableBooks
+import com.example.cryptochallenge.usecases.SaveLocalAvailableBooks
+import kotlinx.coroutines.launch
 
 /**
  * ViewModel for home fragment
  */
-class HomeViewModel : ViewModel() {
-    /**
-     * Property to handle [CryptoRepository]
-     */
-    private val cryptoRepository = CryptoRepository()
+class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     /**
      * LiveData for event trigger
@@ -29,6 +29,29 @@ class HomeViewModel : ViewModel() {
      */
     fun getAvailableBooks(): LiveData<List<Payload>?> {
         return GetAvailableBooks(cryptoRepository).execute()
+    }
+
+    /**
+     * When [bookList] has information it save it, otherwise it shows local info
+     *
+     * @param bookList Book's list
+     */
+    fun processInfo(bookList: List<Payload>?) {
+        if (!bookList.isNullOrEmpty())
+            viewModelScope.launch {
+                SaveLocalAvailableBooks(cryptoRepository).execute(bookList)
+            }
+        else
+            getLocalAvailableBooks()
+    }
+
+    /**
+     * Get local available books list
+     *
+     * @return [LiveData] with local available books list
+     */
+    fun getLocalAvailableBooks(): LiveData<List<Payload>?> {
+        return GetLocalAvailableBooks(cryptoRepository).execute()
     }
 
     /**
