@@ -1,5 +1,6 @@
 package com.example.cryptochallenge.di.database.entity
 
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -19,16 +20,17 @@ import com.example.cryptochallenge.domain.availablebook.Payload
  */
 @Entity(tableName = "book_table")
 data class Book(
-    @PrimaryKey(autoGenerate = true) var id: Int,
-    @ColumnInfo(name = "name") var name: String?,
+    var id: Int,
+    @NonNull
+    @PrimaryKey var name: String,
     @ColumnInfo(name = "minimum_amount") var minimum_amount: Float?,
     @ColumnInfo(name = "maximum_amount") var maximum_amount: Float?,
     @ColumnInfo(name = "minimum_price") var minimum_price: Float?,
     @ColumnInfo(name = "maximum_price") var maximum_price: Float?,
     @ColumnInfo(name = "minimum_value") var minimum_value: Float?,
     @ColumnInfo(name = "maximum_value") var maximum_value: Float?
-){
-    companion object{
+) {
+    companion object {
 
         /**
          * Transform entity to model
@@ -37,7 +39,7 @@ data class Book(
          *
          * @return Available book model
          */
-        fun toModel(book: Book):Payload{
+        fun toModel(book: Book): Payload {
             return Payload(
                 book.name,
                 book.minimum_amount,
@@ -56,10 +58,10 @@ data class Book(
          *
          * @return Book entity
          */
-        fun toEntity(model: Payload):Book{
+        fun toEntity(model: Payload): Book {
             return Book(
                 0,
-                model.book,
+                model.book ?: "",
                 model.minimum_amount,
                 model.maximum_amount,
                 model.minimum_price,

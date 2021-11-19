@@ -69,11 +69,17 @@ class CryptoDetailFragment : Fragment() {
      * Set [viewModel] listeners
      */
     private fun setViewModelListener(cryptoName: String) {
+        viewModel.start(cryptoName)
+
         viewModel.getTicker(cryptoName).observe(viewLifecycleOwner) {
-            viewModel.setItem(it)
+            viewModel.processTickerInfo(it)
         }
 
         viewModel.getOrderBook(cryptoName).observe(viewLifecycleOwner) {
+            viewModel.processOrderbookInfo(it)
+        }
+
+        viewModel.localTicker.observe(viewLifecycleOwner) {
             viewModel.setItem(it)
         }
 

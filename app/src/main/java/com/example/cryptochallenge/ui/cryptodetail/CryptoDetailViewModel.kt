@@ -2,13 +2,14 @@ package com.example.cryptochallenge.ui.cryptodetail
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.example.cryptochallenge.domain.DetailSectionItem
 import com.example.cryptochallenge.domain.SectionType
 import com.example.cryptochallenge.domain.ticker.Payload
 import com.example.cryptochallenge.ui.commons.BaseViewModel
 import com.example.cryptochallenge.ui.commons.SingleLiveEvent
-import com.example.cryptochallenge.usecases.GetOrderBook
-import com.example.cryptochallenge.usecases.GetTicker
+import com.example.cryptochallenge.usecases.*
+import kotlinx.coroutines.launch
 
 /**
  * ViewModel for Cryptocurrency detail
@@ -27,6 +28,15 @@ class CryptoDetailViewModel(application: Application) : BaseViewModel(applicatio
     private val _showLoader = SingleLiveEvent<Boolean>()
     val showLoader: LiveData<Boolean> get() = _showLoader
 
+    private val _localTicker = SingleLiveEvent<Payload?>()
+    val localTicker: LiveData<Payload?> get() = _localTicker
+
+    private var bookName: String = ""
+
+    fun start(_bookName: String) {
+        bookName = _bookName
+    }
+
     /**
      * Get ticker information of a specific book
      *
@@ -35,6 +45,24 @@ class CryptoDetailViewModel(application: Application) : BaseViewModel(applicatio
      */
     fun getTicker(bookName: String): LiveData<Payload?> {
         return GetTicker(cryptoRepository).execute(bookName)
+    }
+
+    fun processTickerInfo(ticker: Payload?) {
+        if (ticker != null) {
+            setItem(ticker)
+            viewModelScope.launch {
+                SaveLocalTicker(cryptoRepository).execute(ticker)
+            }
+        } else {
+            getLocalTicker()
+        }
+    }
+
+    fun getLocalTicker() {
+        viewModelScope.launch {
+            val ticker = GetLocalTicker(cryptoRepository).execute(bookName)
+            _localTicker.postValue(ticker)
+        }
     }
 
     /**
@@ -47,6 +75,42 @@ class CryptoDetailViewModel(application: Application) : BaseViewModel(applicatio
         return GetOrderBook(cryptoRepository).execute(bookName)
     }
 
+    fun processOrderbookInfo(payload: com.example.cryptochallenge.domain.orderbook.Payload?) {
+        if (payload != null) {
+            setItem(payload)
+            viewModelScope.launch {
+                if (!payload.asks.isNullOrEmpty())
+                    SaveLocalOrderList(cryptoRepository).execute(
+                        payload.asks,
+                        SectionType.ASK.name.lowercase()
+                    )
+
+                if (!payload.bids.isNullOrEmpty())
+                    SaveLocalOrderList(cryptoRepository).execute(
+                        payload.bids,
+                        SectionType.BID.name.lowercase()
+                    )
+            }
+        } else {
+            getLocalOrderBooks()
+        }
+    }
+
+    private fun getLocalOrderBooks() {
+        viewModelScope.launch {
+            val askList = GetLocalOrderList(cryptoRepository).execute(
+                bookName,
+                SectionType.ASK.name.lowercase()
+            )
+            val bidList = GetLocalOrderList(cryptoRepository).execute(
+                bookName,
+                SectionType.BID.name.lowercase()
+            )
+            val payload = com.example.cryptochallenge.domain.orderbook.Payload(askList, bidList)
+            setItem(payload)
+        }
+    }
+
     /**
      * Process section information to show it
      *
@@ -57,8 +121,11 @@ class CryptoDetailViewModel(application: Application) : BaseViewModel(applicatio
             is String -> addSection(DetailSectionItem(SectionType.HEADER, item))
             is Payload -> addSection(DetailSectionItem(SectionType.TICKER, item))
             is com.example.cryptochallenge.domain.orderbook.Payload -> {
-                item.asks?.let { addSection(DetailSectionItem(SectionType.ASK, it)) }
-                item.bids?.let { addSection(DetailSectionItem(SectionType.BID, it)) }
+                if (!item.asks.isNullOrEmpty())
+                    addSection(DetailSectionItem(SectionType.ASK, item.asks))
+
+                if (!item.bids.isNullOrEmpty())
+                    addSection(DetailSectionItem(SectionType.BID, item.bids))
             }
         }
     }

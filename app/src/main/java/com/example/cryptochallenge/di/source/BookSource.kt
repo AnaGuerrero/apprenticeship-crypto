@@ -28,7 +28,7 @@ class BookSource(context: Context) : IBookSource {
     private val disposable = CompositeDisposable()
 
     override fun insertBook(book: Book) {
-        val oldBook = bookDao.getBookByName(book.name ?: "")
+        val oldBook = bookDao.getBookByName(book.name)
         if (oldBook != null)
             deleteBook(oldBook)
         bookDao.insertBook(book)

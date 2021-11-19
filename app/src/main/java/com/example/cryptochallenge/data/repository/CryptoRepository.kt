@@ -10,6 +10,7 @@ import com.example.cryptochallenge.di.source.CryptoRemoteSource
 import com.example.cryptochallenge.di.source.OrderSource
 import com.example.cryptochallenge.di.source.TickerSource
 import com.example.cryptochallenge.domain.availablebook.Payload
+import com.example.cryptochallenge.domain.orderbook.PayloadObject
 
 /**
  * Repository for cryptocurrencies
@@ -71,6 +72,37 @@ class CryptoRepository(context: Context) {
      * @return [LiveData] object with order book info or null if error
      */
     fun getOrderBook(bookName: String) = cryptoRemoteSource.getOrderBook(bookName)
+
+    /**
+     * Save locally ticker information
+     *
+     * @param ticker Ticker information
+     */
+    fun saveTicker(ticker: com.example.cryptochallenge.domain.ticker.Payload) =
+        tickerSource.insertTicker(ticker)
+
+    /**
+     * Get local ticker information by its bookName
+     *
+     * @param bookName Ticker bookname
+     * @return [LiveData] object with ticker information or null if error
+     */
+    fun getLocalTickerByBookName(bookName: String) = tickerSource.getTickerByBookName(bookName)
+
+    /**
+     * Save local order book's list
+     *
+     * @param orderList Order book's list
+     */
+    fun saveLocalOrderList(orderList: List<PayloadObject>, type: String) = orderSource.insertOrderList(orderList, type)
+
+    /**
+     * Get local order book's list by its book name
+     *
+     * @param bookName Book name
+     * @return Order book's list
+     */
+    fun getLocalOrderListByBookName(bookName: String, type: String) = orderSource.getOrderListByBookName(bookName, type)
 
     /**
      * Clean the disposable property
