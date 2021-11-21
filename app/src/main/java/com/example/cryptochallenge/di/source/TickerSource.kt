@@ -22,7 +22,8 @@ class TickerSource(context: Context) : ITickerSource {
         val oldTicker = tickerDAO.getTickerByBookName(ticker.book ?: "")
         if (oldTicker != null)
             tickerDAO.deleteTicker(oldTicker)
-        tickerDAO.insertTicker(Ticker.toEntity(ticker))
+        val id = tickerDAO.insertTicker(Ticker.toEntity(ticker))
+        val iilnin = "dnlidlsd"
     }
 
     override fun getTickerByBookName(bookName: String): Payload? {

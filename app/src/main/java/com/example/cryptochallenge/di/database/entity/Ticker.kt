@@ -20,13 +20,7 @@ import com.example.cryptochallenge.domain.ticker.Payload
  * @property created_at Timestamp at which the ticker was generated
  */
 @Entity(
-    tableName = "ticker_table",
-    foreignKeys = [ForeignKey(
-        entity = Book::class,
-        parentColumns = arrayOf("name"),
-        childColumns = arrayOf("book_name"),
-        onDelete = ForeignKey.CASCADE
-    )]
+    tableName = "ticker_table"
 )
 data class Ticker(
     @PrimaryKey(autoGenerate = true) var id: Int,

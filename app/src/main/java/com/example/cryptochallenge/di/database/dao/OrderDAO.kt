@@ -13,9 +13,10 @@ interface OrderDAO {
      * Insert order book in Order Book's table
      *
      * @param orderBook Order book to insert
+     * @return Item id
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertOrder(orderBook: Order)
+    fun insertOrder(orderBook: Order): Long
 
     /**
      * Delete order book in Order Book's table

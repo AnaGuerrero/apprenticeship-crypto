@@ -15,13 +15,7 @@ import com.example.cryptochallenge.domain.orderbook.PayloadObject
  * @property type Order book's type
  */
 @Entity(
-    tableName = "order_book_table",
-    foreignKeys = [ForeignKey(
-        entity = Book::class,
-        parentColumns = arrayOf("name"),
-        childColumns = arrayOf("book_name"),
-        onDelete = ForeignKey.CASCADE
-    )]
+    tableName = "order_book_table"
 )
 data class Order(
     @PrimaryKey(autoGenerate = true) var _id: Int,

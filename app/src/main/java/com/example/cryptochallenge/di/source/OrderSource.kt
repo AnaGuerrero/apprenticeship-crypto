@@ -19,7 +19,8 @@ class OrderSource(context: Context) : IOrderSource {
     private val orderDAO = AppDatabase.getInstance(context).orderDAO
 
     override fun insertOrder(order: PayloadObject, type: String) {
-        orderDAO.insertOrder(Order.toEntity(order, type))
+        val id = orderDAO.insertOrder(Order.toEntity(order, type))
+        val ilndilsnd = "ildknslakdnsald"
     }
 
     override fun insertOrderList(orderList: List<PayloadObject>, type: String) {
