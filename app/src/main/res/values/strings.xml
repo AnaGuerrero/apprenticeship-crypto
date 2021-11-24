@@ -6,9 +6,6 @@
     <string name="ticker_high_label">Last 24 hours price high</string>
     <string name="ticker_last_label">Last traded price</string>
     <string name="ticker_low_label">Last 24 hours price low</string>
-    <string name="open_orders">Open Orders</string>
-    <string name="order_book_ask">Ask</string>
-    <string name="order_book_bid">Bid</string>
     <string name="order_book_price">Price per unit</string>
     <string name="order_book_amount">Major amount</string>
     <string name="btc_name">Bitcoin</string>
@@ -30,4 +27,5 @@
     <string name="uni_name">Uniswap</string>
     <string name="aave_name">AAVE</string>
     <string name="default_name">Unknown</string>
+    <string name="currency_img">Currency Image</string>
 </resources>

@@ -58,7 +58,7 @@ class CryptoDetailViewModel(application: Application) : BaseViewModel(applicatio
         }
     }
 
-    fun getLocalTicker() {
+    private fun getLocalTicker() {
         viewModelScope.launch {
             val ticker = GetLocalTicker(cryptoRepository).execute(bookName)
             _localTicker.postValue(ticker)

@@ -64,10 +64,10 @@ class BookSource(context: Context) : IBookSource {
             bookDao.getAllBooks()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
+                .subscribe({ list ->
                     val payloadList = mutableListOf<Payload>()
-                    it.forEach {
-                        payloadList.add(Book.toModel(it))
+                    list.forEach { item ->
+                        payloadList.add(Book.toModel(item))
                     }
                     bookListLD.postValue(payloadList)
                 }, {

@@ -21,12 +21,12 @@ object Extensions {
     /**
      * Represent record divisor
      */
-    const val DIVISOR = "_"
+    private const val DIVISOR = "_"
 
     /**
      * Represent number of currencies per book
      */
-    const val NUM_CURRENCY_PER_BOOK = 2
+    private const val NUM_CURRENCY_PER_BOOK = 2
 
     /**
      * Load an currency image and set in an [ImageView]

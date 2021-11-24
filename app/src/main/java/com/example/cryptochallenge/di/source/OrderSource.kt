@@ -46,7 +46,7 @@ class OrderSource(context: Context) : IOrderSource {
     override fun getOrderListByBookName(
         bookName: String,
         type: String
-    ): List<PayloadObject>? {
+    ): List<PayloadObject> {
         val orderList = orderDAO.getListOrdersByBookName(bookName, type)
         return toModelList(orderList)
     }

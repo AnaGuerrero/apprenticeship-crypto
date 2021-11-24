@@ -39,7 +39,7 @@ class CryptoRepository(context: Context) {
     /**
      * Get all remote available books
      *
-     * @return [LiveData] object with available books info or null if error
+     * @return Object with available books info or null if error
      */
     fun getRemoteAvailableBooks() = cryptoRemoteSource.getAvailableBooks()
 
@@ -53,7 +53,7 @@ class CryptoRepository(context: Context) {
     /**
      * Get all local available books
      *
-     * @return [LiveData] object with available books info or null if error
+     * @return Object with available books info or null if error
      */
     fun getLocalAvailableBooks() = bookSource.getAllBooks()
 
@@ -61,7 +61,7 @@ class CryptoRepository(context: Context) {
      * Get trading information of a specific book
      *
      * @param bookName Name of the book
-     * @return [LiveData] object with ticker information or null if error
+     * @return Object with ticker information or null if error
      */
     fun getTicker(bookName: String) = cryptoRemoteSource.getTicker(bookName)
 
@@ -69,7 +69,7 @@ class CryptoRepository(context: Context) {
      * Get all open books orders of a specific book
      *
      * @param bookName Name of the book
-     * @return [LiveData] object with order book info or null if error
+     * @return Object with order book info or null if error
      */
     fun getOrderBook(bookName: String) = cryptoRemoteSource.getOrderBook(bookName)
 
@@ -85,7 +85,7 @@ class CryptoRepository(context: Context) {
      * Get local ticker information by its bookName
      *
      * @param bookName Ticker bookname
-     * @return [LiveData] object with ticker information or null if error
+     * @return Object with ticker information or null if error
      */
     fun getLocalTickerByBookName(bookName: String) = tickerSource.getTickerByBookName(bookName)
 
