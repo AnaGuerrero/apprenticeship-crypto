@@ -1,8 +1,8 @@
 package com.example.cryptochallenge.data.repository
 
 import android.content.Context
+import com.example.cryptochallenge.data.services.CryptoDetailServices
 import com.example.cryptochallenge.data.source.IBookSource
-import com.example.cryptochallenge.data.source.ICryptoRemoteSource
 import com.example.cryptochallenge.data.source.IOrderSource
 import com.example.cryptochallenge.data.source.ITickerSource
 import com.example.cryptochallenge.di.source.BookSource
@@ -11,15 +11,19 @@ import com.example.cryptochallenge.di.source.OrderSource
 import com.example.cryptochallenge.di.source.TickerSource
 import com.example.cryptochallenge.domain.availablebook.Payload
 import com.example.cryptochallenge.domain.orderbook.PayloadObject
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Repository for cryptocurrencies
  */
-class CryptoRepository(context: Context) {
-    /**
-     * Property to handle requests
-     */
-    private val cryptoRemoteSource: ICryptoRemoteSource = CryptoRemoteSource()
+@Singleton
+class CryptoRepository @Inject constructor(
+    cryptoDetailServices: CryptoDetailServices,
+    @ApplicationContext private val context: Context
+) {
+    private val cryptoRemoteSource = CryptoRemoteSource(cryptoDetailServices)
 
     /**
      * Property to handle local book request
@@ -94,7 +98,8 @@ class CryptoRepository(context: Context) {
      *
      * @param orderList Order book's list
      */
-    fun saveLocalOrderList(orderList: List<PayloadObject>, type: String) = orderSource.insertOrderList(orderList, type)
+    fun saveLocalOrderList(orderList: List<PayloadObject>, type: String) =
+        orderSource.insertOrderList(orderList, type)
 
     /**
      * Get local order book's list by its book name
@@ -102,7 +107,8 @@ class CryptoRepository(context: Context) {
      * @param bookName Book name
      * @return Order book's list
      */
-    fun getLocalOrderListByBookName(bookName: String, type: String) = orderSource.getOrderListByBookName(bookName, type)
+    fun getLocalOrderListByBookName(bookName: String, type: String) =
+        orderSource.getOrderListByBookName(bookName, type)
 
     /**
      * Clean the disposable property

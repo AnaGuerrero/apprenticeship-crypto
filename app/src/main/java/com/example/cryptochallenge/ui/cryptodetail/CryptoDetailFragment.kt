@@ -14,10 +14,12 @@ import com.example.cryptochallenge.ui.Extensions.show
 import com.example.cryptochallenge.ui.cryptodetail.adapter.SectionsAdapter
 import com.example.cryptochallenge.ui.home.HomeFragment.Companion.CRYPTO_NAME
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Fragment to show crypto detail information
  */
+@AndroidEntryPoint
 class CryptoDetailFragment : Fragment() {
 
     /**

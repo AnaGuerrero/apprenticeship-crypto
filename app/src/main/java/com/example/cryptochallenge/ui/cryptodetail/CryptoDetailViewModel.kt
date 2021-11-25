@@ -1,20 +1,24 @@
 package com.example.cryptochallenge.ui.cryptodetail
 
-import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cryptochallenge.data.repository.CryptoRepository
 import com.example.cryptochallenge.domain.DetailSectionItem
 import com.example.cryptochallenge.domain.SectionType
 import com.example.cryptochallenge.domain.ticker.Payload
-import com.example.cryptochallenge.ui.commons.BaseViewModel
 import com.example.cryptochallenge.ui.commons.SingleLiveEvent
 import com.example.cryptochallenge.usecases.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * ViewModel for Cryptocurrency detail
  */
-class CryptoDetailViewModel(application: Application) : BaseViewModel(application) {
+@HiltViewModel
+class CryptoDetailViewModel @Inject constructor(private val cryptoRepository: CryptoRepository) :
+    ViewModel() {
 
     /**
      * LiveData for load sections

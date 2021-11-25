@@ -2,6 +2,7 @@ package com.example.cryptochallenge.di.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.cryptochallenge.data.services.CryptoDetailServices
 import com.example.cryptochallenge.data.source.ICryptoRemoteSource
 import com.example.cryptochallenge.di.client.NetworkClient
 import com.example.cryptochallenge.domain.availablebook.Payload
@@ -12,7 +13,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 /**
  * Perform the calls to web services and returns responses
  */
-class CryptoRemoteSource : ICryptoRemoteSource {
+class CryptoRemoteSource(private val cryptoDetailServices: CryptoDetailServices) :
+    ICryptoRemoteSource {
     /**
      * Property for dispose web service calls when fragment destroy
      */
@@ -21,7 +23,7 @@ class CryptoRemoteSource : ICryptoRemoteSource {
     override fun getAvailableBooks(): LiveData<List<Payload>?> {
         val response = MutableLiveData<List<Payload>?>()
 
-        val call = NetworkClient().getCryptoDetailService().getAvailableBooks()
+        val call = cryptoDetailServices.getAvailableBooks()
 
         compositeDisposable.add(
             call.subscribeOn(Schedulers.io())

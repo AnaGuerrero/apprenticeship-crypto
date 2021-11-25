@@ -1,20 +1,24 @@
 package com.example.cryptochallenge.ui.home
 
-import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cryptochallenge.data.repository.CryptoRepository
 import com.example.cryptochallenge.domain.availablebook.Payload
-import com.example.cryptochallenge.ui.commons.BaseViewModel
 import com.example.cryptochallenge.ui.commons.SingleLiveEvent
 import com.example.cryptochallenge.usecases.GetAvailableBooks
 import com.example.cryptochallenge.usecases.GetLocalAvailableBooks
 import com.example.cryptochallenge.usecases.SaveLocalAvailableBooks
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * ViewModel for home fragment
  */
-class HomeViewModel(application: Application) : BaseViewModel(application) {
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val cryptoRepository: CryptoRepository) :
+    ViewModel() {
 
     /**
      * LiveData for event trigger

@@ -7,16 +7,19 @@ import com.example.cryptochallenge.data.source.IBookSource
 import com.example.cryptochallenge.di.database.AppDatabase
 import com.example.cryptochallenge.di.database.entity.Book
 import com.example.cryptochallenge.domain.availablebook.Payload
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import javax.inject.Inject
 
 /**
  * Perform calls to book's table of app database
  *
  * @param context Application context
  */
-class BookSource(context: Context) : IBookSource {
+class BookSource @Inject constructor(@ApplicationContext private val context: Context) :
+    IBookSource {
     /**
      * Property to handle book's table
      */

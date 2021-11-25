@@ -11,8 +11,4 @@ import com.example.cryptochallenge.data.repository.CryptoRepository
  */
 abstract class BaseViewModel(application: Application) : AndroidViewModel(application) {
 
-    /**
-     * Property to handle [CryptoRepository] functions
-     */
-    protected val cryptoRepository = CryptoRepository(application.applicationContext)
 }

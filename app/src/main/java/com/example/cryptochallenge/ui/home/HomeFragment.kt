@@ -14,10 +14,12 @@ import com.example.cryptochallenge.databinding.FragmentHomeBinding
 import com.example.cryptochallenge.domain.availablebook.Payload
 import com.example.cryptochallenge.ui.Extensions.show
 import com.example.cryptochallenge.ui.home.adapter.CryptocurrencyAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Fragment to show available books list
  */
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
     /**
      * Property that represent fragment' view

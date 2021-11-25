@@ -1,16 +1,23 @@
 package com.example.cryptochallenge.di.client
 
 import com.example.cryptochallenge.data.services.CryptoDetailServices
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.internal.userAgent
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Singleton
 
 /**
  * Handle the network client
  */
+@Module
+@InstallIn(SingletonComponent::class)
 class NetworkClient {
     companion object {
         /**
@@ -24,6 +31,8 @@ class NetworkClient {
      *
      * @return Instance of [CryptoDetailServices]
      */
+    @Provides
+    @Singleton
     fun getCryptoDetailService(): CryptoDetailServices {
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -40,7 +49,9 @@ class NetworkClient {
      *
      * @return OkHttpClient Builder Instance
      */
-    private fun getOkHttpLogging(): OkHttpClient.Builder {
+    @Provides
+    @Singleton
+    fun getOkHttpLogging(): OkHttpClient.Builder {
         val httpClient = OkHttpClient.Builder()
 
         httpClient.addInterceptor(Interceptor { chain ->
